@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Galería de Personas - Prototipo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container layout">
+    <aside class="sidebar">
+      <h1>Agregar foto</h1>
+
+      <div class="drag-area" id="dragArea">
+        <input id="photoInput" type="file" accept="image/*" class="hidden-file">
+        <div class="drag-inner">
+          <div class="drag-title">Arrastra y suelta la foto aquí</div>
+          <div class="drag-sub">o <button id="pickFileBtn" class="link-btn">Selecciona un archivo</button></div>
+          <div id="fileName" class="file-name"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="templateInput">Plantilla (tarjeta base)</label>
+        <input id="templateInput" type="file" accept="image/*">
+        <div class="help">Sube la imagen de plantilla que siempre se usará como fondo de la tarjeta.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="phraseSelect">Frase</label>
+        <div class="phrase-row">
+          <select id="phraseSelect"></select>
+          <input id="newPhraseInput" type="text" placeholder="Nueva frase" aria-label="Nueva frase">
+          <button id="addPhraseBtn" title="Agregar frase">Agregar</button>
+        </div>
+        <ul id="phraseList" class="phrase-list" aria-label="Frases guardadas"></ul>
+      </div>
+
+      <div class="form-group">
+        <label for="nameInput">Nombre (línea 1)</label>
+        <input id="nameInput" type="text" placeholder="Ej: CN. LUIS CAMAYO">
+      </div>
+      <div class="form-group">
+        <label for="name2Input">Compañía / Línea 2</label>
+        <input id="name2Input" type="text" placeholder="Ej: COFUR COBRA">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group small">
+          <label for="dateInput">Fecha</label>
+          <input id="dateInput" type="date">
+        </div>
+        <div class="form-group small">
+          <label for="rankInput">Rango</label>
+          <input id="rankInput" type="text" placeholder="Ej: MAYOR">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="commanderInput">Nombre comandante</label>
+        <input id="commanderInput" type="text" placeholder="Ej: JHON RICHARD IDARRAGA CASTAÑO">
+      </div>
+      <div class="form-group">
+        <label for="battalionInput">Nombre batallón</label>
+        <input id="battalionInput" type="text" placeholder="Ej: COMANDANTE BAFUR N°3">
+      </div>
+
+      <div class="actions">
+        <button id="downloadBtn" class="primary">Descargar</button>
+        <button id="clearBtn">Limpiar</button>
+      </div>
+
+      <div class="form-group">
+        <label for="footerInput">Pie de foto (opcional)</label>
+        <input id="footerInput" type="text" placeholder="Ej: Unidad X - 2025">
+      </div>
+
+      <div class="form-group">
+        <label>Editar caja de inserción de la foto (plantilla)</label>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:6px"><input id="editOverlayToggle" type="checkbox"> Modo editar</label>
+          <button id="resetOverlayBtn" type="button">Resetear caja</button>
+          <button id="saveOverlayBtn" type="button">Guardar caja</button>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+          <label style="font-size:12px">X% <input id="overlayX" type="number" min="0" max="100" step="0.1" style="width:80px"></label>
+          <label style="font-size:12px">Y% <input id="overlayY" type="number" min="0" max="100" step="0.1" style="width:80px"></label>
+          <label style="font-size:12px">W% <input id="overlayW" type="number" min="0" max="100" step="0.1" style="width:80px"></label>
+          <label style="font-size:12px">H% <input id="overlayH" type="number" min="0" max="100" step="0.1" style="width:80px"></label>
+        </div>
+        <div class="help">Activa "Modo editar" para arrastrar/ajustar la caja en la previsualización. Guarda para persistir.</div>
+      </div>
+
+      <div class="form-group">
+        <label>Editar campos de la tarjeta</label>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:6px"><input id="editFieldsToggle" type="checkbox"> Modo editar campos</label>
+          <select id="fieldSelect" style="min-width:160px">
+            <option value="phrase">Frase (superior)</option>
+            <option value="feliz">FELIZ CUMPLEAÑOS (izq)</option>
+            <option value="day">Día (fecha)</option>
+            <option value="month">Mes (fecha)</option>
+            <option value="name1">Nombre línea 1</option>
+            <option value="name2">Nombre línea 2</option>
+            <option value="rank">Rango</option>
+            <option value="commander">Comandante</option>
+            <option value="battalion">Batallón</option>
+            <option value="footer">Pie de foto</option>
+          </select>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+          <label style="font-size:12px">X% <input id="fieldX" type="number" min="0" max="100" step="0.1" style="width:80px"></label>
+          <label style="font-size:12px">Y% <input id="fieldY" type="number" min="0" max="100" step="0.1" style="width:80px"></label>
+          <label style="font-size:12px">Tamaño <input id="fieldSize" type="number" min="6" max="200" step="1" style="width:80px"></label>
+          <input id="fieldSizeRange" type="range" min="6" max="200" step="1" style="width:160px">
+          <button id="saveFieldBtn" type="button">Guardar</button>
+          <button id="resetFieldBtn" type="button">Resetear</button>
+        </div>
+        <div class="help">Activa el modo y arrastra texto en la previsualización, o usa los controles para precisar la posición y tamaño.</div>
+      </div>
+
+      <p class="help">Consejo: añade frases que uses frecuentemente y estarán disponibles aquí.</p>
+    </aside>
+
+    <section class="preview">
+      <h2>Previsualización</h2>
+      <div class="canvas-wrap">
+        <canvas id="previewCanvas"></canvas>
+      </div>
+      <p class="note">El fondo original de la foto se mantiene en la exportación.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
